@@ -10,45 +10,63 @@ package edu.cmu.cs.cs214.rec04;
  *
  */
 
- public class DelegationSortedIntList implements IntegerList {
-    private SortedIntList list;
-    private int totalAdded = 0;
+public class DelegationSortedIntList implements IntegerList {
+    // Write your implementation below with API documentation
+    private SortedIntList sortedIntList;
+    private int totalAdded; 
 
     public DelegationSortedIntList() {
-        list = new SortedIntList();
+        this.sortedIntList = new SortedIntList(); 
+        this.totalAdded = 0;
     }
 
-    @Override
-    public boolean add(int value) {
-        boolean added = list.add(value);
-        if (added) {
+    public boolean add(int num) {
+        boolean result = sortedIntList.add(num);
+        if (result) {
             totalAdded++;
         }
-        return added;
+        return result;
     }
 
-    @Override
-    public boolean addAll(IntegerList otherList) {
-        int before = list.size();
-        boolean changed = list.addAll(otherList);
-        totalAdded += (list.size() - before);
-        return changed;
+    public boolean addAll (IntegerList list){
+        boolean result = false;
+        for(int i = 0; i < list.size(); i++){
+            int element = list.get(i);
+            if(add(element)){
+                result = true;
+            }
+        }
+        return result;
     }
 
-    // Делегацлах бусад методүүд
-    @Override
     public int get(int index) {
-        return list.get(index);
+        return sortedIntList.get(index); 
     }
 
-    @Override
+    public boolean remove(int num) {
+        boolean result = sortedIntList.remove(num);
+        if (result) {
+            // totalAdded--;
+        }
+        return result;
+    }
+
+    public boolean removeAll(IntegerList list) {
+        boolean result = false;
+        for (int i = 0; i < list.size(); i++) {
+            int element = list.get(i);
+            if(remove(element)){
+                result = true;
+            }        
+        }
+        return result;
+    }
+
     public int size() {
-        return list.size();
+        return sortedIntList.size(); 
     }
 
     public int getTotalAdded() {
-        return totalAdded;
+        return totalAdded; 
     }
-
-    // ... remove, indexOf гэх мэт бусад методүүдийг ижил зарчмаар хэрэгжүүлнэ
 }
